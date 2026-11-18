@@ -239,8 +239,13 @@ sudo apache2ctl -S
 # Estado y comprobación de certificados SSL
 sudo certbot certificates
 sudo certbot renew --dry-run
-```
+
 ---
+
+# Ver registros de errores en tiempo real
+sudo tail -f /var/log/apache2/error.log
+sudo tail -f /var/log/apache2/chippermeadow882_error.log
+```
 
 > [!TIP]
 > ### ⚡ Acelerador HTTP Varnish Integrado
@@ -250,8 +255,3 @@ sudo certbot renew --dry-run
 > 
 > *Aprende cómo configurar Varnish en el puerto `80` para servir contenido ultra-rápido desde la memoria RAM mientras Apache atiende en el puerto interno `8080`.*
 ---
-
-# Ver registros de errores en tiempo real
-sudo tail -f /var/log/apache2/error.log
-sudo tail -f /var/log/apache2/chippermeadow882_error.log
-```
