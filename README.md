@@ -4,6 +4,15 @@ Bienvenido a la guía completa de configuración, despliegue y mantenimiento de 
 
 ---
 
+> [!TIP]
+> ### ⚡ Acelerador HTTP Varnish Integrado
+> ¿Has añadido o quieres desplegar **Varnish Cache** como proxy inverso delante de Apache?
+> 
+> 👉 **[🚀 Pulsa aquí para abrir la Guía Completa de Varnish Cache (`varnish.md`)](file:///home/2asird/varnish.md)**
+> 
+> *Aprende cómo configurar Varnish en el puerto `80` para servir contenido ultra-rápido desde la memoria RAM mientras Apache atiende en el puerto interno `8080`.*
+---
+
 ## 🗺️ Mapa de Arquitectura del Sistema
 
 ```mermaid
