@@ -33,6 +33,18 @@ sequenceDiagram
 ```
 
 ---
+### 🚀 Benchmark de Rendimiento & Aceleración de Caché
+
+[![Benchmark](https://img.shields.io/badge/Informe_Técnico-Ver_Resultados_Completos-blue?style=for-the-badge&logo=speedtest&logoColor=white)](./benchmark_varnish_vs_apache.md)
+[![Status](https://img.shields.io/badge/Varnish_vs_Apache-Pruebas_Superadas-success?style=for-the-badge&logo=checkmarx&logoColor=white)](./benchmark_varnish_vs_apache.md)
+
+* 🧪 **Pruebas de Carga con `ab`:** Análisis de saturación desde 10 hasta 2.500 conexiones concurrentes.
+* 💥 **Punto de Ruptura de Apache:** Identificación de cuellos de botella por sobrecarga TLS y agotamiento de *workers*.
+* ⚡ **Mega-Carga en Varnish:** Procesamiento de 30.000 peticiones y casi 1 GB de tráfico en 15 segundos con 99,95% de éxito.
+
+🔗 **Consulta la documentación completa en [benchmark_varnish_vs_apache.md](./benchmark_varnish_vs_apache.md)**.
+
+---
 
 ## 🏗️ 2. Arquitectura de Puertos: Antes vs. Después
 
