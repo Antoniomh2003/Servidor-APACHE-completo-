@@ -4,15 +4,6 @@ Bienvenido a la guía completa de configuración, despliegue y mantenimiento de 
 
 ---
 
-> [!TIP]
-> ### ⚡ Acelerador HTTP Varnish Integrado
-> ¿Has añadido o quieres desplegar **Varnish Cache** como proxy inverso delante de Apache?
-> 
-> 👉 **[🚀 Pulsa aquí para abrir la Guía Completa de Varnish Cache](varnish.md)**
-> 
-> *Aprende cómo configurar Varnish en el puerto `80` para servir contenido ultra-rápido desde la memoria RAM mientras Apache atiende en el puerto interno `8080`.*
----
-
 ## 🗺️ Mapa de Arquitectura del Sistema
 
 ```mermaid
@@ -233,7 +224,7 @@ Si en algún momento no carga la página ni conecta por SSH:
 
 ## 🧰 Chuleta Rápida de Comandos Útiles
 
-```bash
+```bash 
 # Estado del servidor web Apache
 sudo systemctl status apache2
 sudo systemctl restart apache2
@@ -248,6 +239,17 @@ sudo apache2ctl -S
 # Estado y comprobación de certificados SSL
 sudo certbot certificates
 sudo certbot renew --dry-run
+```
+---
+
+> [!TIP]
+> ### ⚡ Acelerador HTTP Varnish Integrado
+> ¿Has añadido o quieres desplegar **Varnish Cache** como proxy inverso delante de Apache?
+> 
+> 👉 **[🚀 Pulsa aquí para abrir la Guía Completa de Varnish Cache](varnish.md)**
+> 
+> *Aprende cómo configurar Varnish en el puerto `80` para servir contenido ultra-rápido desde la memoria RAM mientras Apache atiende en el puerto interno `8080`.*
+---
 
 # Ver registros de errores en tiempo real
 sudo tail -f /var/log/apache2/error.log
