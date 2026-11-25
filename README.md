@@ -127,6 +127,14 @@ sudo certbot --apache -d chippermeadow882.ddns.net
 > 4. Configura la redirección forzada de **HTTP a HTTPS (código 301)** para garantizar que nadie navegue sin cifrar.
 > 5. Habilita un temporizador en systemd (`certbot.timer`) para renovar el certificado antes de sus 90 días de caducidad.
 
+
+### 📊 Monitorización en Tiempo Real: Dashboard GoAccess
+[![GoAccess](https://img.shields.io/badge/GoAccess-Live_Dashboard-orange?style=for-the-badge&logo=datadog&logoColor=white)](./monitorizacion_goaccess_apache.md)
+[![WebSockets](https://img.shields.io/badge/WebSockets-Port_7890-green?style=for-the-badge&logo=websocket&logoColor=white)](./monitorizacion_goaccess_apache.md)
+* 📈 **Dashboard Web Interactivo:** Estadísticas visuales en vivo con gráficos de barras, visitantes únicos y códigos HTTP.
+* ⚡ **Streaming por WebSockets:** Los datos se actualizan solos en la pantalla al segundo de recibir visitas.
+* 🛡️ **Auditoría de Errores 404:** Monitorización activa de rutas inexistentes y detección de escaneos de seguridad.
+👉 **[📖 Ver la Guía Completa de GoAccess](./monitorizacion_goaccess_apache.md)**
 ---
 
 ## 🛠️ Problemas Encontrados y Cómo se Resolvieron
