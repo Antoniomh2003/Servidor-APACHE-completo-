@@ -288,3 +288,20 @@ flowchart TD
 > ```bash
 > sudo apache2ctl configtest && sudo varnishd -C -f /etc/varnish/default.vcl > /dev/null && echo "✅ Sintaxis de Apache y Varnish correcta"
 > ```
+>
+> ---
+## 🛡️ 6. Módulo Avanzado: Alta Disponibilidad con Grace Mode
+> [!IMPORTANT]
+> **¿Qué ocurre si el servidor Apache de origen se cae o se apaga por mantenimiento?**  
+> Sin una configuración especial, Varnish devolvería un error `503 Backend fetch failed`. Para evitarlo, hemos implementado y documentado el **Grace Mode**: una técnica de nivel empresarial donde Varnish monitoriza a Apache con **sondas médicas (*probes*)** y, en caso de caída del backend, **rescata la web de su memoria RAM sirviéndola con `200 OK`** sin interrumpir el servicio a los usuarios.
+```mermaid
+flowchart LR
+    A["💥 Apache se Apaga<br/>(Caída o Mantenimiento)"] --> B["🩺 Sonda Médica Detecta:<br/>boot.default sick (0/5)"]
+    B --> C["⚡ Varnish Activa<br/>Grace Mode (Rescate RAM)"]
+    C --> D["🌐 El Visitante Recibe:<br/>HTTP 200 OK (Web Intacta)"]
+```
+### 📑 Documentación Técnica Completa:
+👉 **[📖 Ver la Guía de Despliegue de Grace Mode y Sondas Médicas](./grace_mode_varnish_alta_disponibilidad.md)**
+* 🩺 **Sondas Médicas Activas:** Monitorización de salud cada 5 segundos con detección automática `Healthy` / `Sick`.
+* 🛡️ **Retención de Emergencia:** Almacenamiento en memoria durante 1 hora extra (`beresp.grace = 1h`).
+* 🚀 **Despliegues con Cero Caídas (*Zero-Downtime*):** Actualizaciones de Apache sin impacto para los usuarios.
