@@ -136,6 +136,7 @@ done
 | Problema / Síntoma | Causa Raíz | Solución |
 | :--- | :--- | :--- |
 | **GoAccess no muestra datos ni se actualiza** | Se está leyendo `/var/log/apache2/access.log` (vacío, 0 bytes) en lugar del log específico del VirtualHost. | Apuntar a `/var/log/apache2/chippermeadow882_access.log` donde Apache escribe activamente. |
+| **Todas las visitas salen con la IP `127.0.0.1`** | Apache registra la IP del socket del proxy (HAProxy o Varnish) en vez del cliente real. | Activar `mod_remoteip` en Apache. 👉 **[Ver Guía de mod_remoteip](./logs_ip_real_mod_remoteip.md)**. |
 | **La página `stats.html` siempre muestra lo mismo** | Varnish ha guardado `stats.html` en memoria RAM. | Añadir `if (req.url ~ "^/stats.html") { return (pass); }` en `vcl_recv` de Varnish. |
 | **El WebSocket no conecta (punto rojo en el panel)** | El puerto `7890` de WebSocket está bloqueado por el firewall o Security Group. | Abrir el puerto `7890/TCP` en el firewall o comprobar con `ss -tulpn \| grep 7890`. |
 

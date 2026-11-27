@@ -33,18 +33,6 @@ sequenceDiagram
 ```
 
 ---
-### 🚀 Benchmark de Rendimiento & Aceleración de Caché
-
-[![Benchmark](https://img.shields.io/badge/Informe_Técnico-Ver_Resultados_Completos-blue?style=for-the-badge&logo=speedtest&logoColor=white)](./benchmark_varnish_vs_apache.md)
-[![Status](https://img.shields.io/badge/Varnish_vs_Apache-Pruebas_Superadas-success?style=for-the-badge&logo=checkmarx&logoColor=white)](./benchmark_varnish_vs_apache.md)
-
-* 🧪 **Pruebas de Carga con `ab`:** Análisis de saturación desde 10 hasta 2.500 conexiones concurrentes.
-* 💥 **Punto de Ruptura de Apache:** Identificación de cuellos de botella por sobrecarga TLS y agotamiento de *workers*.
-* ⚡ **Mega-Carga en Varnish:** Procesamiento de 30.000 peticiones y casi 1 GB de tráfico en 15 segundos con 99,95% de éxito.
-
-🔗 **Consulta la documentación completa en [benchmark_varnish_vs_apache.md](./benchmark_varnish_vs_apache.md)**.
-
----
 
 ## 🏗️ 2. Arquitectura de Puertos: Antes vs. Después
 
@@ -288,20 +276,72 @@ flowchart TD
 > ```bash
 > sudo apache2ctl configtest && sudo varnishd -C -f /etc/varnish/default.vcl > /dev/null && echo "✅ Sintaxis de Apache y Varnish correcta"
 > ```
->
-> ---
+
+---
+
 ## 🛡️ 6. Módulo Avanzado: Alta Disponibilidad con Grace Mode
+
 > [!IMPORTANT]
 > **¿Qué ocurre si el servidor Apache de origen se cae o se apaga por mantenimiento?**  
 > Sin una configuración especial, Varnish devolvería un error `503 Backend fetch failed`. Para evitarlo, hemos implementado y documentado el **Grace Mode**: una técnica de nivel empresarial donde Varnish monitoriza a Apache con **sondas médicas (*probes*)** y, en caso de caída del backend, **rescata la web de su memoria RAM sirviéndola con `200 OK`** sin interrumpir el servicio a los usuarios.
+
 ```mermaid
 flowchart LR
     A["💥 Apache se Apaga<br/>(Caída o Mantenimiento)"] --> B["🩺 Sonda Médica Detecta:<br/>boot.default sick (0/5)"]
     B --> C["⚡ Varnish Activa<br/>Grace Mode (Rescate RAM)"]
     C --> D["🌐 El Visitante Recibe:<br/>HTTP 200 OK (Web Intacta)"]
 ```
+
 ### 📑 Documentación Técnica Completa:
 👉 **[📖 Ver la Guía de Despliegue de Grace Mode y Sondas Médicas](./grace_mode_varnish_alta_disponibilidad.md)**
+
 * 🩺 **Sondas Médicas Activas:** Monitorización de salud cada 5 segundos con detección automática `Healthy` / `Sick`.
 * 🛡️ **Retención de Emergencia:** Almacenamiento en memoria durante 1 hora extra (`beresp.grace = 1h`).
 * 🚀 **Despliegues con Cero Caídas (*Zero-Downtime*):** Actualizaciones de Apache sin impacto para los usuarios.
+
+---
+
+## 📊 7. Módulo Avanzado: Monitorización Visual en Tiempo Real con GoAccess
+
+> [!TIP]
+> **¿Cómo monitorizar las visitas, los fallos y el rendimiento sin sobrecargar el servidor?**  
+> Hemos integrado **GoAccess**: un analizador de registros en tiempo real ultrarrápido programado en C. Procesa los logs de Apache y genera un **dashboard web interactivo en vivo** mediante WebSockets (puerto 7890), permitiendo observar picos de tráfico, códigos HTTP y ataques en directo.
+
+```mermaid
+flowchart LR
+    A["🛡️ Apache / Varnish Logs"] --> B["📊 GoAccess Daemon"]
+    B --> C["🌐 /var/www/html/stats.html"]
+    C <-->|"WebSockets :7890"| D["💻 Dashboard Interactivo en Vivo"]
+```
+
+### 📑 Documentación Técnica Completa:
+👉 **[📖 Ver la Guía de Instalación y Monitorización con GoAccess](./monitorizacion_goaccess_apache.md)**
+
+* 📊 **Dashboard HTML Interactivo:** Métricas visuales, geolocalización, navegadores y códigos de estado HTTP.
+* ⚡ **Streaming por WebSockets:** Actualización instantánea sin refrescar el navegador.
+* 🛡️ **Bypass de Caché en Varnish:** Configuración en `default.vcl` para servir las estadísticas en riguroso directo.
+
+---
+
+## 🕵️‍♂️ 8. Auditoría y Seguridad: Restauración de IPs Reales en Logs (`mod_remoteip`)
+
+> [!WARNING]
+> **El problema del enmascaramiento de IPs:**  
+> Al situar un proxy inverso o balanceador (HAProxy o Varnish) delante de Apache, en los archivos de registro (`access.log`) **todas las peticiones aparecen registradas como `127.0.0.1`**, impidiendo auditorías de seguridad, trazabilidad de accesos y bloqueos con Fail2ban.
+
+```mermaid
+flowchart LR
+    A["👤 Cliente Real: 172.26.20.6"] --> B["⚖️ Proxy / HAProxy / Varnish"]
+    B -->|"Inyecta X-Forwarded-For: 172.26.20.6"| C["🛡️ Apache (mod_remoteip)"]
+    C --> D["📝 access.log: Registra 172.26.20.6 (IP Real)"]
+```
+
+### 📑 Documentación Técnica Completa:
+👉 **[📖 Ver la Guía de Configuración de mod_remoteip y Auditoría de Logs](./logs_ip_real_mod_remoteip.md)**
+
+* 🛡️ **Cabecera `X-Forwarded-For`:** Transmisión de la IP original desde el balanceador hacia Apache.
+* ⚙️ **Módulo `mod_remoteip`:** Configuración de `RemoteIPHeader` y `RemoteIPInternalProxy 127.0.0.1`.
+* 📊 **Ajuste de Formato:** Sustitución de `%h` por `%a` en `apache2.conf` para auditoría y analítica fidedigna en GoAccess.
+
+
+

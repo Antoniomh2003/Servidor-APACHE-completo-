@@ -262,4 +262,19 @@ sudo tail -f /var/log/apache2/chippermeadow882_error.log
 > 👉 **[🚀 Pulsa aquí para abrir la Guía Completa de Varnish Cache](varnish.md)**
 > 
 > *Aprende cómo configurar Varnish en el puerto `80` para servir contenido ultra-rápido desde la memoria RAM mientras Apache atiende en el puerto interno `8080`.*
+
 ---
+
+## 📚 Módulos Avanzados y Documentación Complementaria
+
+Este repositorio cuenta con guías técnicas especializadas para cada fase de la infraestructura:
+
+| Módulo | Documentación | Descripción |
+| :--- | :--- | :--- |
+| 🕵️‍♂️ **Auditoría y Seguridad** | **[📖 logs_ip_real_mod_remoteip.md](logs_ip_real_mod_remoteip.md)** | **Restaurar IPs reales:** Configuración de `mod_remoteip` para que los logs muestren la IP del cliente y no la del proxy (HAProxy/Varnish). |
+| 📊 **Monitorización en Vivo** | **[📖 monitorizacion_goaccess_apache.md](monitorizacion_goaccess_apache.md)** | **Dashboard GoAccess:** Análisis de logs en tiempo real vía WebSockets en el puerto 7890. |
+| 🛡️ **Alta Disponibilidad** | **[📖 grace_mode_varnish_alta_disponibilidad.md](grace_mode_varnish_alta_disponibilidad.md)** | **Grace Mode:** Tolerancia a caídas de Apache sirviendo contenido en memoria RAM (200 OK). |
+| 🧪 **Pruebas de Carga y Estrés** | **[📖 benchmark_varnish_vs_apache.md](benchmark_varnish_vs_apache.md)** | **Benchmark `ab`:** Pruebas de rendimiento con hasta 30.000 peticiones y 2.500 conexiones simultáneas. |
+
+---
+
